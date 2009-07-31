@@ -96,5 +96,10 @@ class AssetPackageHelperDevelopmentTest < Test::Unit::TestCase
     assert_dom_equal build_css_expected_string("screen", "header", "foo", "bar", "subdir/foo", "subdir/bar"), 
       stylesheet_link_merged(:base, :secondary, "subdir/styles")
   end
+
+  def test_css_empty_package_name
+    assert_dom_equal build_css_expected_string("screen", "foo", "subdir/bar"), 
+      stylesheet_link_merged("screen", "foo", "subdir/bar", "empty")
+  end
   
 end

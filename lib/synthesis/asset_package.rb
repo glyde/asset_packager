@@ -42,6 +42,7 @@ module Synthesis
         package_names = Array.new
         sources.each do |source|
           package = find_by_target(asset_type, source) || find_by_source(asset_type, source)
+          next if package && !package.has_sources?
           package_names << (package ? package.current_file : source)
         end
         package_names.uniq
@@ -105,6 +106,10 @@ module Synthesis
       @file_name = "#{@target}_packaged.#{@extension}"
       @full_path = File.join(@asset_path, @file_name)
     end
+
+    def has_sources?
+      !@sources.empty?
+    end
   
     def package_exists?
       File.exists?(@full_path)
@@ -128,6 +133,7 @@ module Synthesis
 
     private
       def create_new_build
+        return unless has_sources?
         new_build_path = "#{@asset_path}/#{@target}_packaged.#{@extension}"
         if File.exists?(new_build_path)
           log "Latest version already exists: #{new_build_path}"

@@ -136,5 +136,15 @@ class AssetPackageHelperProductionTest < Test::Unit::TestCase
     assert_dom_equal build_css_expected_string(package_name1, package_name2, package_name3), 
       stylesheet_link_merged(:base, :secondary, "subdir/styles")
   end
+
+  def test_css_empty_package_name
+    current_file1 = Synthesis::AssetPackage.find_by_source("stylesheets", "screen").current_file
+    current_file2 = Synthesis::AssetPackage.find_by_source("stylesheets", "foo").current_file
+    current_file3 = Synthesis::AssetPackage.find_by_source("stylesheets", "subdir/bar").current_file
+
+    assert_dom_equal build_css_expected_string(current_file1, current_file2, current_file3), 
+      stylesheet_link_merged("screen", "foo", "subdir/bar", "empty")
+
+  end
   
 end

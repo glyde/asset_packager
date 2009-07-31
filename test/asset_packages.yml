@@ -8,6 +8,7 @@ javascripts:
   - foo
   - bar
   - application
+- empty : []
 stylesheets:
 - base:
   - screen
@@ -18,3 +19,4 @@ stylesheets:
 - subdir/styles:
   - foo
   - bar
+- empty : []
